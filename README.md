@@ -72,6 +72,16 @@ is open source, you can always build a verified APK yourself
 - **Own node** (Umbrel, myNode, RaspiBlitz with the mempool app):
   `http://umbrel.local:3006/api` — note that outside `.onion`, https is required.
 
+### Transparency
+
+This app was **designed and written by Claude, an AI assistant by Anthropic**,
+under the direction of the repository owner. The full security assessment of
+the released APK — embedded permissions, every network endpoint in the
+bytecode, the update-integrity model, how to reproduce all checks yourself, and
+the honest limitations — is documented in **[SECURITY.md](SECURITY.md)**.
+The software is provided “as is”, without warranty; the strongest guarantee an
+app can offer is open source you can verify and build yourself.
+
 ---
 
 ## Česky
@@ -132,6 +142,16 @@ aplikace) s ověřením SHA-256.
   onion adresu mempool instance (`http://…onion/api`).
 - **Vlastní uzel** (Umbrel, myNode, RaspiBlitz s mempool aplikací):
   `http://umbrel.local:3006/api` — pozor, mimo `.onion` vyžaduje https.
+
+### Transparentnost
+
+Aplikaci **navrhl a naprogramoval Claude, AI asistent společnosti Anthropic**,
+pod vedením správce repozitáře. Kompletní bezpečnostní rozbor vydaného APK —
+zabudovaná oprávnění, všechny síťové adresy v bytecode, model integrity
+aktualizací, návod jak si vše ověřit a poctivé limity — je zdokumentován
+v **[SECURITY.md](SECURITY.md)**. Software je poskytován „tak, jak je“, bez
+záruk; nejsilnější zárukou aplikace je otevřený kód, který si každý může
+ověřit a sestavit sám.
 
 ### Historie verzí
 
