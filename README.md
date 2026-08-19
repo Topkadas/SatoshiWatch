@@ -18,6 +18,30 @@ Fully anonymous **watch-only Bitcoin address monitor** for Android. It passively
 watches your cold-storage addresses (Coldcard, Trezor, …) and alerts you the
 moment funds move in — or out. No private keys, no accounts, no telemetry.
 
+### Why this app exists
+
+Hi — after the recent confusion around Coldcard, I had a simple app built:
+**SatoshiWatch** (with the help of AI — the entire development process and the
+security assessment are transparently documented in this repo). I used to be in
+a situation where every morning, right after waking up, I checked the
+blockchain to see whether all my sats were still in place.
+
+This app exists to give you back a good night's sleep. It passively watches the
+Bitcoin addresses you set up and alerts you about every movement — within
+seconds in realtime mode (WebSocket), or within 15 minutes in battery-saving
+mode.
+
+- **No accounts, no sign-in** — no e-mail, no password, and above all no
+  private keys (watch-only; there is nowhere to even enter them).
+- **Data stays on your phone** — addresses are stored encrypted on your device;
+  the only thing that ever leaves are blockchain queries, sent to a node you
+  choose — your own node, or via Tor/Orbot, so you don't have to trust anyone.
+- **Home-screen widget** — your addresses and the latest movement at a glance.
+- **Open source** — code, security assessment and build instructions right here.
+
+I built this primarily for myself, but I hope it brings peaceful sleep to
+someone else too.
+
 ### 📥 Download
 
 **[⬇️ SatoshiWatch-1.2.0-debug.apk](https://github.com/Topkadas/SatoshiWatch/raw/main/dist/SatoshiWatch-1.2.0-debug.apk)** (36 MB, Android 8.0+)
@@ -89,6 +113,29 @@ app can offer is open source you can verify and build yourself.
 Plně anonymní **watch-only monitor bitcoinových adres** pro Android. Pasivně hlídá
 trezorové adresy (Coldcard, Trezor, …) a okamžitě upozorní na příchozí i odchozí
 transakce — bez privátních klíčů, bez účtů, bez telemetrie.
+
+### Proč tahle aplikace vznikla
+
+Ahoj — vzhledem k nedávným zmatkům kolem Coldcard jsem si nechal postavit
+jednoduchou aplikaci **SatoshiWatch** (s pomocí AI — celý vznik i bezpečnostní
+rozbor je transparentně v tomto repu). Sám jsem byl v situaci, kdy jsem každé
+ráno hned po probuzení kontroloval blockchain, jestli jsou všechny saty na svém
+místě.
+
+Aplikace slouží k tomu, aby vám vrátila klidný spánek. Pasivně hlídá bitcoinové
+adresy, které si nastavíte, a upozorní na každý pohyb — v realtime režimu
+(WebSocket) během vteřin, v úsporném režimu do 15 minut.
+
+- **Žádné účty ani přihlašování** — žádný e-mail, heslo, a hlavně žádné
+  privátní klíče (watch-only, nemá je ani kam zadat).
+- **Data jen v mobilu** — adresy jsou uložené šifrovaně ve vašem telefonu; ven
+  jdou pouze dotazy na blockchain, a to na uzel, který si sami zvolíte — klidně
+  vlastní node nebo přes Tor/Orbot, takže se nikomu nesvěřujete.
+- **Widget na ploše** — přehled adres a posledního pohybu na jeden pohled.
+- **Open source** — kód, bezpečnostní rozbor i návod na vlastní build přímo zde.
+
+Dělal jsem to primárně pro sebe, ale doufám, že klidný spánek přinese i někomu
+dalšímu.
 
 ### 📥 Stažení
 
