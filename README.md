@@ -4,6 +4,14 @@ Plně anonymní **watch-only monitor bitcoinových adres** pro Android. Pasivně
 trezorové adresy (Coldcard, Trezor, …) a okamžitě upozorní na příchozí i odchozí
 transakce — bez privátních klíčů, bez účtů, bez telemetrie.
 
+## 📥 Stažení
+
+**[⬇️ SatoshiWatch-1.0.0-debug.apk](https://github.com/Topkadas/SatoshiWatch/raw/main/dist/SatoshiWatch-1.0.0-debug.apk)** (36 MB, Android 8.0+)
+
+Instalace: stáhni APK do telefonu → otevři → povol instalaci z neznámých zdrojů.
+Jde o debug build podepsaný vývojovým klíčem; ověřený build si můžeš kdykoli
+zkompilovat sám ze zdrojáků (`./gradlew assembleDebug`) — proto je projekt open source.
+
 ## Bezpečnostní principy
 
 | Princip | Implementace |
