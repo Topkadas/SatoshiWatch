@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.satoshiwatch.data.settings.AppSettings
 import com.satoshiwatch.data.settings.SettingsRepository
+import com.satoshiwatch.data.update.UpdateManager
+import com.satoshiwatch.data.update.UpdateState
 import com.satoshiwatch.service.TransactionWatchService
 import com.satoshiwatch.worker.TransactionCheckWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,16 +15,26 @@ import kotlinx.coroutines.flow.StateFlow
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 /**
- * Nastavení: vlastní uzel (REST/WS URL), SOCKS5 proxy (Orbot/Tor)
- * a režimy monitorování. Validační metody vrací text chyby, nebo null.
+ * Nastavení: vlastní uzel (REST/WS URL), SOCKS5 proxy (Orbot/Tor),
+ * režimy monitorování a aktualizace aplikace. Validační metody vrací
+ * text chyby, nebo null.
+ *
+ * Stav aktualizace jen zrcadlí ze singleton [UpdateManager] – stahování
+ * tak přežije opuštění obrazovky (ViewModel je vázaný na back-stack entry).
  */
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
+    private val updateManager: UpdateManager,
     @ApplicationContext private val appContext: Context
 ) : ViewModel() {
 
     val settings: StateFlow<AppSettings> = settingsRepository.settings
+
+    val updateState: StateFlow<UpdateState> = updateManager.state
+    val currentVersionName: String get() = updateManager.currentVersionName
+
+    // ------------------------------------------------------------------ Síť
 
     fun saveNetworkSettings(apiUrl: String, wsUrl: String): String? {
         val trimmedApi = apiUrl.trim()
@@ -53,6 +65,8 @@ class SettingsViewModel @Inject constructor(
         restartRealtimeIfRunning()
         return null
     }
+
+    // --------------------------------------------------------- Monitorování
 
     fun setRealtimeEnabled(enabled: Boolean) {
         settingsRepository.update { it.copy(realtimeEnabled = enabled) }
@@ -85,5 +99,21 @@ class SettingsViewModel @Inject constructor(
             TransactionWatchService.stop(appContext)
             TransactionWatchService.start(appContext)
         }
+    }
+
+    // ----------------------------------------------- Aktualizace z GitHubu
+
+    fun checkForUpdate() = updateManager.checkForUpdate()
+
+    fun downloadUpdate() = updateManager.downloadUpdate()
+
+    fun cancelDownload() = updateManager.cancelDownload()
+
+    fun installUpdate() = updateManager.installUpdate()
+
+    /** „Zkontrolovat znovu“ – reset a nová kontrola. */
+    fun recheckUpdate() {
+        updateManager.resetState()
+        updateManager.checkForUpdate()
     }
 }

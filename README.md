@@ -6,11 +6,19 @@ transakce — bez privátních klíčů, bez účtů, bez telemetrie.
 
 ## 📥 Stažení
 
-**[⬇️ SatoshiWatch-1.0.0-debug.apk](https://github.com/Topkadas/SatoshiWatch/raw/main/dist/SatoshiWatch-1.0.0-debug.apk)** (36 MB, Android 8.0+)
+**[⬇️ SatoshiWatch-1.1.0-debug.apk](https://github.com/Topkadas/SatoshiWatch/raw/main/dist/SatoshiWatch-1.1.0-debug.apk)** (36 MB, Android 8.0+)
 
 Instalace: stáhni APK do telefonu → otevři → povol instalaci z neznámých zdrojů.
 Jde o debug build podepsaný vývojovým klíčem; ověřený build si můžeš kdykoli
 zkompilovat sám ze zdrojáků (`./gradlew assembleDebug`) — proto je projekt open source.
+
+Novinky v 1.1.0:
+- **Widget na plochu (4×2):** až 3 sledované adresy se zůstatkem a posledním
+  pohybem (↑/↓ + relativní čas), tlačítko ručního obnovení; překresluje se po
+  každé synchronizaci.
+- **Aktualizace přímo z GitHubu:** Nastavení → Aktualizace aplikace. Ruční
+  kontrola `dist/version.json`, stažení přes aplikačního klienta (respektuje
+  Tor proxy) a ověření SHA-256 před instalací. Žádné automatické pingování.
 
 ## Bezpečnostní principy
 

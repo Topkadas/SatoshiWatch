@@ -19,6 +19,10 @@ interface WatchedAddressDao {
     @Query("SELECT * FROM watched_addresses WHERE address = :address")
     suspend fun get(address: String): WatchedAddressEntity?
 
+    /** Nejstarší adresy (první přidané = hlavní trezory) – pro domovský widget. */
+    @Query("SELECT * FROM watched_addresses ORDER BY createdAt ASC LIMIT :limit")
+    suspend fun getOldest(limit: Int): List<WatchedAddressEntity>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(entity: WatchedAddressEntity)
 

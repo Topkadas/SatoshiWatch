@@ -15,6 +15,10 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE txid = :txid AND address = :address")
     suspend fun get(txid: String, address: String): TransactionEntity?
 
+    /** Poslední pohyb na adrese – pro domovský widget. */
+    @Query("SELECT * FROM transactions WHERE address = :address ORDER BY timestamp DESC LIMIT 1")
+    suspend fun getLatestForAddress(address: String): TransactionEntity?
+
     @Upsert
     suspend fun upsert(entity: TransactionEntity)
 

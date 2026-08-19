@@ -93,4 +93,27 @@
     <!-- Synchronizace -->
     <string name="msg_sync_done">Synchronizace dokončena</string>
     <string name="msg_sync_failed">Synchronizace selhala u %1$d z %2$d adres</string>
+
+    <!-- Domovský widget -->
+    <string name="widget_label">Přehled adres</string>
+    <string name="widget_description">Až 3 sledované adresy se zůstatkem a posledním pohybem</string>
+    <string name="widget_no_addresses">Žádné sledované adresy – přidejte je v aplikaci</string>
+    <string name="widget_updated_at">Aktualizováno %1$s</string>
+    <string name="widget_refreshing">Aktualizuji…</string>
+    <string name="widget_no_movement">Zatím žádný pohyb</string>
+
+    <!-- Aktualizace aplikace -->
+    <string name="settings_section_update">Aktualizace aplikace</string>
+    <string name="update_current_version">Nainstalovaná verze: %1$s</string>
+    <string name="update_check">Zkontrolovat aktualizace na GitHubu</string>
+    <string name="update_checking">Kontroluji dostupnost nové verze…</string>
+    <string name="update_up_to_date">Máte nejnovější verzi</string>
+    <string name="update_available">K dispozici je verze %1$s</string>
+    <string name="update_download">Stáhnout a nainstalovat</string>
+    <string name="update_downloading">Stahuji… %1$d %%</string>
+    <string name="update_ready">Staženo a ověřeno (SHA-256) – pokračujte instalací</string>
+    <string name="update_install">Nainstalovat</string>
+    <string name="update_recheck">Zkontrolovat znovu</string>
+    <string name="update_grant_install">Nejprve povolte instalaci z tohoto zdroje v otevřeném nastavení a poté klepněte znovu na Nainstalovat</string>
+    <string name="update_error">Aktualizace selhala: %1$s</string>
 </resources>

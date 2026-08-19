@@ -37,9 +37,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.satoshiwatch.R
+import com.satoshiwatch.data.update.UpdateState
 import com.satoshiwatch.ui.SettingsViewModel
+import com.satoshiwatch.ui.theme.ConfirmGreen
 import kotlinx.coroutines.launch
 
 /**
@@ -192,6 +195,12 @@ fun SettingsScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
 
             HorizontalDivider()
 
+            // -------------------------------------------------- Aktualizace
+            SectionTitle(stringResource(R.string.settings_section_update))
+            UpdateSection(viewModel)
+
+            HorizontalDivider()
+
             // ------------------------------------------------------ Soukromí
             SectionTitle(stringResource(R.string.settings_section_privacy))
             Text(
@@ -199,6 +208,105 @@ fun SettingsScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+        }
+    }
+}
+
+@Composable
+private fun UpdateSection(viewModel: SettingsViewModel) {
+    val updateState by viewModel.updateState.collectAsStateWithLifecycle()
+
+    Text(
+        stringResource(R.string.update_current_version, viewModel.currentVersionName),
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+
+    when (val state = updateState) {
+        is UpdateState.Idle, is UpdateState.UpToDate, is UpdateState.Error -> {
+            if (state is UpdateState.UpToDate) {
+                Text(
+                    stringResource(R.string.update_up_to_date),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = ConfirmGreen
+                )
+            }
+            if (state is UpdateState.Error) {
+                Text(
+                    stringResource(R.string.update_error, state.message),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+            OutlinedButton(
+                onClick = { viewModel.checkForUpdate() },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(stringResource(R.string.update_check)) }
+        }
+
+        is UpdateState.Checking -> {
+            Text(
+                stringResource(R.string.update_checking),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+        }
+
+        is UpdateState.Available -> {
+            Text(
+                stringResource(R.string.update_available, state.manifest.versionName),
+                style = MaterialTheme.typography.bodyMedium,
+                color = ConfirmGreen
+            )
+            if (state.manifest.notes.isNotBlank()) {
+                Text(
+                    state.manifest.notes,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Button(
+                onClick = { viewModel.downloadUpdate() },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(stringResource(R.string.update_download)) }
+        }
+
+        is UpdateState.Downloading -> {
+            Text(
+                stringResource(R.string.update_downloading, state.percent),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            LinearProgressIndicator(
+                progress = { state.percent / 100f },
+                modifier = Modifier.fillMaxWidth()
+            )
+            OutlinedButton(
+                onClick = { viewModel.cancelDownload() },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(stringResource(R.string.action_cancel)) }
+        }
+
+        is UpdateState.ReadyToInstall -> {
+            Text(
+                stringResource(R.string.update_ready),
+                style = MaterialTheme.typography.bodyMedium,
+                color = ConfirmGreen
+            )
+            if (state.needsInstallPermission) {
+                Text(
+                    stringResource(R.string.update_grant_install),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+            Button(
+                onClick = { viewModel.installUpdate() },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(stringResource(R.string.update_install)) }
+            OutlinedButton(
+                onClick = { viewModel.recheckUpdate() },
+                modifier = Modifier.fillMaxWidth()
+            ) { Text(stringResource(R.string.update_recheck)) }
         }
     }
 }
