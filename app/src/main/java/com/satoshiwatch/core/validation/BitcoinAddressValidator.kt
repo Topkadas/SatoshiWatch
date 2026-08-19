@@ -1,5 +1,7 @@
 package com.satoshiwatch.core.validation
 
+import androidx.annotation.StringRes
+import com.satoshiwatch.R
 import java.security.MessageDigest
 import java.util.Locale
 
@@ -15,7 +17,9 @@ enum class AddressType(val label: String) {
 sealed class ValidationResult {
     /** [normalized] je kanonický tvar adresy (bech32 vždy malými písmeny). */
     data class Valid(val normalized: String, val type: AddressType) : ValidationResult()
-    data class Invalid(val reason: String) : ValidationResult()
+
+    /** Důvod jako string resource – UI ho lokalizuje dle zvoleného jazyka. */
+    data class Invalid(@StringRes val reasonRes: Int) : ValidationResult()
 }
 
 /**
@@ -48,13 +52,11 @@ object BitcoinAddressValidator {
 
     fun validate(input: String): ValidationResult {
         val address = sanitize(input)
-        if (address.isEmpty()) return ValidationResult.Invalid("Adresa je prázdná")
+        if (address.isEmpty()) return ValidationResult.Invalid(R.string.val_err_empty)
         return when {
             address.startsWith("1") || address.startsWith("3") -> validateBase58(address)
             address.lowercase(Locale.ROOT).startsWith("bc1") -> validateBech32(address)
-            else -> ValidationResult.Invalid(
-                "Neznámý formát adresy (podporováno: 1…, 3…, bc1q…, bc1p…)"
-            )
+            else -> ValidationResult.Invalid(R.string.val_err_unknown_format)
         }
     }
 
@@ -62,23 +64,23 @@ object BitcoinAddressValidator {
 
     private fun validateBase58(address: String): ValidationResult {
         if (address.length !in 26..35) {
-            return ValidationResult.Invalid("Neplatná délka Legacy adresy")
+            return ValidationResult.Invalid(R.string.val_err_legacy_length)
         }
         val decoded = base58Decode(address)
-            ?: return ValidationResult.Invalid("Adresa obsahuje neplatný Base58 znak")
+            ?: return ValidationResult.Invalid(R.string.val_err_base58_char)
         if (decoded.size != 25) {
-            return ValidationResult.Invalid("Neplatná délka dekódovaných dat")
+            return ValidationResult.Invalid(R.string.val_err_decoded_length)
         }
         val payload = decoded.copyOfRange(0, 21)
         val checksum = decoded.copyOfRange(21, 25)
         val expected = sha256(sha256(payload)).copyOfRange(0, 4)
         if (!expected.contentEquals(checksum)) {
-            return ValidationResult.Invalid("Chybný kontrolní součet – překlep v adrese?")
+            return ValidationResult.Invalid(R.string.val_err_checksum)
         }
         return when (decoded[0].toInt() and 0xFF) {
             0x00 -> ValidationResult.Valid(address, AddressType.P2PKH)
             0x05 -> ValidationResult.Valid(address, AddressType.P2SH)
-            else -> ValidationResult.Invalid("Nepodporovaná verze adresy (není mainnet)")
+            else -> ValidationResult.Invalid(R.string.val_err_version)
         }
     }
 
@@ -124,60 +126,62 @@ object BitcoinAddressValidator {
         // Rozsah znaků se ověřuje PŘED lowercase: Unicode mapování (např. U+212A
         // KELVIN SIGN → „k“) by jinak propašovalo znak mimo BIP-173 rozsah 33–126.
         if (address.any { it.code < 33 || it.code > 126 }) {
-            return ValidationResult.Invalid("Adresa obsahuje neplatný znak")
+            return ValidationResult.Invalid(R.string.val_err_invalid_char)
         }
         val hasUpper = address.any { it in 'A'..'Z' }
         val hasLower = address.any { it in 'a'..'z' }
         if (hasUpper && hasLower) {
-            return ValidationResult.Invalid("Bech32 adresa nesmí míchat velká a malá písmena")
+            return ValidationResult.Invalid(R.string.val_err_mixed_case)
         }
         val addr = address.lowercase(Locale.ROOT)
-        if (addr.length > 90) return ValidationResult.Invalid("Adresa je příliš dlouhá")
+        if (addr.length > 90) return ValidationResult.Invalid(R.string.val_err_too_long)
 
         val sep = addr.lastIndexOf('1')
         if (sep < 1 || sep + 7 > addr.length) {
-            return ValidationResult.Invalid("Neplatný formát Bech32 adresy")
+            return ValidationResult.Invalid(R.string.val_err_bech32_format)
         }
         val hrp = addr.substring(0, sep)
         if (hrp != MAINNET_HRP) {
-            return ValidationResult.Invalid("Adresa není pro Bitcoin mainnet (očekáváno „bc“)")
+            return ValidationResult.Invalid(R.string.val_err_not_mainnet)
         }
         val dataPart = addr.substring(sep + 1)
         val data = IntArray(dataPart.length)
         for (i in dataPart.indices) {
             val idx = BECH32_CHARSET.indexOf(dataPart[i])
-            if (idx < 0) return ValidationResult.Invalid("Adresa obsahuje neplatný Bech32 znak")
+            if (idx < 0) return ValidationResult.Invalid(R.string.val_err_bech32_char)
             data[i] = idx
         }
         val encoding = verifyChecksum(hrp, data)
-            ?: return ValidationResult.Invalid("Chybný kontrolní součet – překlep v adrese?")
-        if (data.size < 7) return ValidationResult.Invalid("Adresa je příliš krátká")
+            ?: return ValidationResult.Invalid(R.string.val_err_checksum)
+        if (data.size < 7) return ValidationResult.Invalid(R.string.val_err_too_short)
 
         val witnessVersion = data[0]
-        if (witnessVersion > 16) return ValidationResult.Invalid("Neplatná verze witness programu")
+        if (witnessVersion > 16) {
+            return ValidationResult.Invalid(R.string.val_err_witness_version)
+        }
         val program = convertBits(data.copyOfRange(1, data.size - 6))
-            ?: return ValidationResult.Invalid("Neplatné zarovnání dat witness programu")
+            ?: return ValidationResult.Invalid(R.string.val_err_program_alignment)
         if (program.size < 2 || program.size > 40) {
-            return ValidationResult.Invalid("Neplatná délka witness programu")
+            return ValidationResult.Invalid(R.string.val_err_program_length)
         }
 
         if (witnessVersion == 0) {
             if (encoding != BECH32_CONST) {
-                return ValidationResult.Invalid("SegWit v0 musí používat kódování Bech32")
+                return ValidationResult.Invalid(R.string.val_err_v0_encoding)
             }
             return when (program.size) {
                 20 -> ValidationResult.Valid(addr, AddressType.P2WPKH)
                 32 -> ValidationResult.Valid(addr, AddressType.P2WSH)
-                else -> ValidationResult.Invalid("Neplatná délka programu pro SegWit v0")
+                else -> ValidationResult.Invalid(R.string.val_err_v0_program_length)
             }
         }
         if (encoding != BECH32M_CONST) {
-            return ValidationResult.Invalid("SegWit v1+ musí používat kódování Bech32m")
+            return ValidationResult.Invalid(R.string.val_err_v1_encoding)
         }
         return if (witnessVersion == 1 && program.size == 32) {
             ValidationResult.Valid(addr, AddressType.P2TR)
         } else {
-            ValidationResult.Invalid("Nepodporovaná budoucí verze witness programu")
+            ValidationResult.Invalid(R.string.val_err_future_version)
         }
     }
 

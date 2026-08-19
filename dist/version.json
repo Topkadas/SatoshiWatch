@@ -1,7 +1,7 @@
 {
-  "versionCode": 2,
-  "versionName": "1.1.0",
-  "apkUrl": "https://github.com/Topkadas/SatoshiWatch/raw/main/dist/SatoshiWatch-1.1.0-debug.apk",
-  "sha256": "ab6d56257b337b5f45ceeb75093ceb59a9d0cade0ecc999387e1d01d1acc7c75",
-  "notes": "Widget na plochu (3 adresy, posledni pohyb, rucni obnoveni) + aktualizace aplikace primo z GitHubu s overenim SHA-256"
+  "versionCode": 3,
+  "versionName": "1.2.0",
+  "apkUrl": "https://github.com/Topkadas/SatoshiWatch/raw/main/dist/SatoshiWatch-1.2.0-debug.apk",
+  "sha256": "9ab475701318842c6388c59963a6161b1464dfe69cfbcd930c2ad4fa25354662",
+  "notes": "Volba jazyka: cestina, anglictina, nemcina (vychozi podle systemu). Lokalizovane notifikace, widget i chybove hlasky."
 }

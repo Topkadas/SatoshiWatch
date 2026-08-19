@@ -6,6 +6,8 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.FileProvider
 import com.satoshiwatch.BuildConfig
+import com.satoshiwatch.R
+import com.satoshiwatch.core.locale.AppLocale
 import com.satoshiwatch.data.remote.NetworkClientProvider
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
@@ -70,7 +72,7 @@ sealed interface UpdateState {
  */
 @Singleton
 class UpdateManager @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext private val appContext: Context,
     private val network: NetworkClientProvider
 ) {
 
@@ -79,6 +81,9 @@ class UpdateManager @Inject constructor(
             "https://raw.githubusercontent.com/Topkadas/SatoshiWatch/main/dist/version.json"
         private const val UPDATES_DIR = "updates"
     }
+
+    /** Kontext obalený zvoleným jazykem – chybové texty respektují volbu uživatele. */
+    private val context: Context get() = AppLocale.wrap(appContext)
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private var downloadJob: Job? = null
@@ -103,7 +108,7 @@ class UpdateManager @Inject constructor(
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                UpdateState.Error(e.message ?: "Neznámá chyba")
+                UpdateState.Error(e.message ?: context.getString(R.string.update_err_unknown))
             }
         }
     }
@@ -121,7 +126,7 @@ class UpdateManager @Inject constructor(
                 _state.value = UpdateState.Available(available.manifest)
                 throw e
             } catch (e: Exception) {
-                _state.value = UpdateState.Error(e.message ?: "Stažení selhalo")
+                _state.value = UpdateState.Error(e.message ?: context.getString(R.string.update_err_download))
             }
         }
     }
@@ -157,7 +162,7 @@ class UpdateManager @Inject constructor(
         }
         runCatching { context.startActivity(buildInstallIntent(ready.file)) }
             .onFailure {
-                _state.value = UpdateState.Error(it.message ?: "Instalaci se nepodařilo spustit")
+                _state.value = UpdateState.Error(it.message ?: context.getString(R.string.update_err_install))
             }
     }
 
@@ -166,8 +171,8 @@ class UpdateManager @Inject constructor(
     private suspend fun fetchManifest(): UpdateManifestDto {
         val request = Request.Builder().url(MANIFEST_URL).build()
         network.okHttpClient().newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("HTTP ${response.code}")
-            val body = response.body?.string() ?: throw IOException("Prázdná odpověď")
+            if (!response.isSuccessful) throw IOException(context.getString(R.string.update_err_http, response.code))
+            val body = response.body?.string() ?: throw IOException(context.getString(R.string.update_err_empty))
             return network.json.decodeFromString(UpdateManifestDto.serializer(), body)
         }
     }
@@ -187,8 +192,8 @@ class UpdateManager @Inject constructor(
         try {
             val request = Request.Builder().url(manifest.apkUrl).build()
             network.okHttpClient().newCall(request).execute().use { response ->
-                if (!response.isSuccessful) throw IOException("HTTP ${response.code}")
-                val body = response.body ?: throw IOException("Prázdná odpověď")
+                if (!response.isSuccessful) throw IOException(context.getString(R.string.update_err_http, response.code))
+                val body = response.body ?: throw IOException(context.getString(R.string.update_err_empty))
                 val totalBytes = body.contentLength()
                 val digest = MessageDigest.getInstance("SHA-256")
 
@@ -215,7 +220,7 @@ class UpdateManager @Inject constructor(
 
                 val actualHash = digest.digest().joinToString("") { "%02x".format(it) }
                 if (!actualHash.equals(manifest.sha256, ignoreCase = true)) {
-                    throw SecurityException("SHA-256 otisk staženého APK nesouhlasí s manifestem")
+                    throw SecurityException(context.getString(R.string.update_err_hash))
                 }
             }
             return outFile

@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.satoshiwatch.MainActivity
 import com.satoshiwatch.R
+import com.satoshiwatch.core.locale.AppLocale
 import com.satoshiwatch.core.util.Formatting
 import com.satoshiwatch.domain.model.ParsedTransaction
 import com.satoshiwatch.domain.model.TxDirection
@@ -24,8 +25,11 @@ import javax.inject.Singleton
 /** Notifikační kanály a stavba všech Android notifikací aplikace. */
 @Singleton
 class NotificationHelper @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val appContext: Context
 ) {
+
+    /** Kontext obalený zvoleným jazykem – notifikace respektují volbu v Nastavení. */
+    private val context: Context get() = AppLocale.wrap(appContext)
 
     companion object {
         const val CHANNEL_OUTGOING = "channel_outgoing_tx"

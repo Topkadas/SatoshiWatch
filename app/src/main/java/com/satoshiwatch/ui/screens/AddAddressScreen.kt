@@ -52,7 +52,7 @@ import com.satoshiwatch.ui.theme.ConfirmGreen
 fun AddAddressScreen(viewModel: MainViewModel, onDone: () -> Unit) {
     var addressInput by rememberSaveable { mutableStateOf("") }
     var labelInput by rememberSaveable { mutableStateOf("") }
-    var formError by remember { mutableStateOf<String?>(null) }
+    var formErrorRes by remember { mutableStateOf<Int?>(null) }
     var showScanner by remember { mutableStateOf(false) }
     var cameraDenied by remember { mutableStateOf(false) }
 
@@ -91,22 +91,25 @@ fun AddAddressScreen(viewModel: MainViewModel, onDone: () -> Unit) {
                 value = addressInput,
                 onValueChange = {
                     addressInput = it
-                    formError = null
+                    formErrorRes = null
                 },
                 label = { Text(stringResource(R.string.field_address)) },
                 textStyle = TextStyle(fontFamily = FontFamily.Monospace),
                 singleLine = true,
-                isError = formError != null || liveValidation is ValidationResult.Invalid,
+                isError = formErrorRes != null || liveValidation is ValidationResult.Invalid,
                 supportingText = {
-                    val error = formError
+                    val errorRes = formErrorRes
                     when {
-                        error != null -> Text(error, color = MaterialTheme.colorScheme.error)
+                        errorRes != null -> Text(
+                            stringResource(errorRes),
+                            color = MaterialTheme.colorScheme.error
+                        )
                         liveValidation is ValidationResult.Valid -> Text(
                             stringResource(R.string.hint_valid_address, liveValidation.type.label),
                             color = ConfirmGreen
                         )
                         liveValidation is ValidationResult.Invalid -> Text(
-                            liveValidation.reason,
+                            stringResource(liveValidation.reasonRes),
                             color = MaterialTheme.colorScheme.error
                         )
                         cameraDenied -> Text(
@@ -142,8 +145,8 @@ fun AddAddressScreen(viewModel: MainViewModel, onDone: () -> Unit) {
 
             Button(
                 onClick = {
-                    viewModel.addAddress(addressInput, labelInput) { error ->
-                        if (error == null) onDone() else formError = error
+                    viewModel.addAddress(addressInput, labelInput) { errorRes ->
+                        if (errorRes == null) onDone() else formErrorRes = errorRes
                     }
                 },
                 enabled = addressInput.isNotBlank(),

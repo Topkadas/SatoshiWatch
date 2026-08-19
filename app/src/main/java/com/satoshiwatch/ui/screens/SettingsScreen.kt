@@ -1,5 +1,8 @@
 package com.satoshiwatch.ui.screens
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.satoshiwatch.R
+import com.satoshiwatch.core.locale.AppLocale
 import com.satoshiwatch.data.update.UpdateState
 import com.satoshiwatch.ui.SettingsViewModel
 import com.satoshiwatch.ui.theme.ConfirmGreen
@@ -63,8 +67,12 @@ fun SettingsScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
     var proxyPort by remember(settings.proxyPort) { mutableStateOf(settings.proxyPort.toString()) }
 
     val savedMessage = stringResource(R.string.msg_settings_saved)
-    fun report(error: String?) {
-        scope.launch { snackbarHostState.showSnackbar(error ?: savedMessage) }
+    fun report(errorRes: Int?) {
+        scope.launch {
+            snackbarHostState.showSnackbar(
+                if (errorRes == null) savedMessage else context.getString(errorRes)
+            )
+        }
     }
 
     Scaffold(
@@ -195,6 +203,12 @@ fun SettingsScreen(viewModel: SettingsViewModel, onBack: () -> Unit) {
 
             HorizontalDivider()
 
+            // --------------------------------------------------------- Jazyk
+            SectionTitle(stringResource(R.string.settings_section_language))
+            LanguageSection(viewModel)
+
+            HorizontalDivider()
+
             // -------------------------------------------------- Aktualizace
             SectionTitle(stringResource(R.string.settings_section_update))
             UpdateSection(viewModel)
@@ -309,6 +323,61 @@ private fun UpdateSection(viewModel: SettingsViewModel) {
             ) { Text(stringResource(R.string.update_recheck)) }
         }
     }
+}
+
+/** Přepínač jazyka: system / čeština / angličtina / němčina. */
+@Composable
+private fun LanguageSection(viewModel: SettingsViewModel) {
+    val context = LocalContext.current
+    var selected by remember { mutableStateOf(AppLocale.get(context)) }
+
+    val options = listOf(
+        AppLocale.SYSTEM to stringResource(R.string.language_system),
+        "cs" to stringResource(R.string.language_cs),
+        "en" to stringResource(R.string.language_en),
+        "de" to stringResource(R.string.language_de)
+    )
+
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        options.take(2).forEach { (tag, label) ->
+            LanguageChip(tag, label, selected) { newTag ->
+                selected = newTag
+                AppLocale.set(context, newTag)
+                viewModel.onLanguageChanged()
+                context.findActivity()?.recreate()
+            }
+        }
+    }
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        options.drop(2).forEach { (tag, label) ->
+            LanguageChip(tag, label, selected) { newTag ->
+                selected = newTag
+                AppLocale.set(context, newTag)
+                viewModel.onLanguageChanged()
+                context.findActivity()?.recreate()
+            }
+        }
+    }
+}
+
+@Composable
+private fun LanguageChip(
+    tag: String,
+    label: String,
+    selected: String,
+    onSelect: (String) -> Unit
+) {
+    FilterChip(
+        selected = selected == tag,
+        onClick = { onSelect(tag) },
+        label = { Text(label) }
+    )
+}
+
+private tailrec fun Context.findActivity(): Activity? = when (this) {
+    is Activity -> this
+    is ContextWrapper -> baseContext.findActivity()
+    else -> null
 }
 
 @Composable

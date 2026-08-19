@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SatoshiWatch</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_watched_addresses">Sledované adresy</string>
+    <string name="dashboard_recent_transactions">Poslední transakce</string>
+    <string name="dashboard_empty_title">Zatím nesledujete žádnou adresu</string>
+    <string name="dashboard_empty_hint">Přidejte první bitcoinovou adresu tlačítkem +</string>
+    <string name="dashboard_no_transactions">Zatím žádné zaznamenané transakce</string>
+    <string name="action_add_address">Přidat adresu</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="action_refresh">Aktualizovat</string>
+    <string name="action_delete">Smazat</string>
+    <string name="action_cancel">Zrušit</string>
+    <string name="action_save">Uložit</string>
+    <string name="action_back">Zpět</string>
+    <string name="action_scan_qr">Skenovat QR kód</string>
+    <string name="delete_dialog_title">Smazat adresu?</string>
+    <string name="delete_dialog_text">Adresa „%1$s“ přestane být sledována a její lokální historie bude odstraněna.</string>
+    <string name="tx_count">%1$d transakcí</string>
+    <string name="balance_btc">%1$s BTC</string>
+
+    <!-- Přidání adresy -->
+    <string name="add_address_title">Přidat sledovanou adresu</string>
+    <string name="field_address">Bitcoin adresa</string>
+    <string name="field_label">Štítek (např. Coldcard Vault 1)</string>
+    <string name="hint_valid_address">Platná adresa: %1$s</string>
+    <string name="error_camera_permission">Bez přístupu ke kameře nelze skenovat QR kód</string>
+    <string name="scanner_hint">Namiřte fotoaparát na QR kód s adresou</string>
+    <string name="msg_address_added">Adresa byla přidána a je sledována</string>
+    <string name="msg_address_exists">Tato adresa je již sledována</string>
+    <string name="msg_address_removed">Adresa byla odstraněna</string>
+
+    <!-- Stav transakce -->
+    <string name="status_in_mempool">Nepotvrzeno – v mempoolu</string>
+    <string name="status_confirmed_height">Potvrzeno v bloku %1$d</string>
+    <string name="status_confirmed">Potvrzeno</string>
+
+    <!-- Nastavení -->
+    <string name="settings_title">Nastavení</string>
+    <string name="settings_section_network">Síťové připojení</string>
+    <string name="settings_api_url">REST API URL</string>
+    <string name="settings_ws_url">WebSocket URL</string>
+    <string name="settings_save_network">Uložit síťová nastavení</string>
+    <string name="settings_section_proxy">SOCKS5 proxy (Tor / Orbot)</string>
+    <string name="settings_proxy_enable">Směrovat provoz přes SOCKS5 proxy</string>
+    <string name="settings_proxy_host">Adresa proxy (host)</string>
+    <string name="settings_proxy_port">Port</string>
+    <string name="settings_save_proxy">Uložit proxy</string>
+    <string name="settings_section_monitoring">Monitorování</string>
+    <string name="settings_realtime">Okamžité notifikace (WebSocket)</string>
+    <string name="settings_realtime_desc">Trvalé spojení na popředí – upozornění bez zpoždění Doze režimu</string>
+    <string name="settings_periodic">Periodická kontrola na pozadí</string>
+    <string name="settings_periodic_desc">Úsporné skenování přes WorkManager</string>
+    <string name="settings_interval">Interval kontroly</string>
+    <string name="settings_interval_minutes">%1$d min</string>
+    <string name="settings_section_battery">Baterie</string>
+    <string name="settings_battery_button">Otevřít nastavení optimalizace baterie</string>
+    <string name="settings_battery_desc">Pro spolehlivé notifikace vypněte optimalizaci baterie pro SatoshiWatch</string>
+    <string name="settings_section_privacy">Soukromí</string>
+    <string name="settings_privacy_text">Žádné účty ani registrace. Žádná telemetrie a analytika. Data jsou uložena pouze v tomto zařízení v šifrované databázi (SQLCipher, klíč v Android KeyStore). Síťová komunikace směřuje přímo na vámi zvolený uzel, volitelně přes Tor.</string>
+    <string name="msg_settings_saved">Nastavení uloženo</string>
+    <string name="error_invalid_api_url">Neplatná URL adresa REST API (musí být http:// nebo https://)</string>
+    <string name="error_invalid_ws_url">WebSocket URL musí začínat ws:// nebo wss://</string>
+    <string name="error_invalid_port">Neplatný port (1–65535)</string>
+    <string name="error_proxy_host">Zadejte adresu proxy</string>
+
+    <!-- Jazyk -->
+    <string name="settings_section_language">Jazyk aplikace</string>
+    <string name="language_system">Podle systému</string>
+    <string name="language_cs">Čeština</string>
+    <string name="language_en">English</string>
+    <string name="language_de">Deutsch</string>
+
+    <!-- Notifikační kanály -->
+    <string name="channel_outgoing_name">Odchozí transakce</string>
+    <string name="channel_outgoing_desc">Kritická výstraha při pohybu prostředků ze sledované adresy</string>
+    <string name="channel_incoming_name">Příchozí transakce</string>
+    <string name="channel_incoming_desc">Upozornění na příchozí platby na sledované adresy</string>
+    <string name="channel_service_name">Služba sledování na pozadí</string>
+    <string name="channel_service_desc">Trvalá notifikace aktivního sledování v reálném čase</string>
+
+    <!-- Notifikace -->
+    <string name="notif_outgoing_title">⚠️ ODCHOZÍ transakce</string>
+    <string name="notif_outgoing_confirmed_title">⚠️ Odchozí transakce potvrzena</string>
+    <string name="notif_incoming_title">Příchozí transakce</string>
+    <string name="notif_incoming_confirmed_title">Příchozí transakce potvrzena</string>
+    <string name="notif_amount_line">%1$s: %2$s BTC (%3$s sat)</string>
+    <string name="notif_status_line">Stav: %1$s</string>
+    <string name="notif_txid_line">TXID: %1$s</string>
+    <string name="notif_fee_line">Poplatek: %1$s sat</string>
+    <string name="notif_public_fallback">Nová aktivita na sledované adrese</string>
+
+    <!-- Foreground služba -->
+    <string name="service_notif_title">SatoshiWatch – aktivní sledování</string>
+    <string name="service_state_connecting">Připojování k uzlu…</string>
+    <string name="service_state_connected">Připojeno – transakce se sledují v reálném čase</string>
+    <string name="service_state_reconnecting">Spojení přerušeno – nový pokus za %1$d s</string>
+    <string name="service_state_block">Nový blok %1$d – kontroluji potvrzení</string>
+
+    <!-- Synchronizace -->
+    <string name="msg_sync_done">Synchronizace dokončena</string>
+    <string name="msg_sync_failed">Synchronizace selhala u %1$d z %2$d adres</string>
+    <string name="msg_sync_error">Synchronizace selhala – zkontrolujte připojení k uzlu</string>
+
+    <!-- Domovský widget -->
+    <string name="widget_label">Přehled adres</string>
+    <string name="widget_description">Až 3 sledované adresy se zůstatkem a posledním pohybem</string>
+    <string name="widget_no_addresses">Žádné sledované adresy – přidejte je v aplikaci</string>
+    <string name="widget_updated_at">Aktualizováno %1$s</string>
+    <string name="widget_refreshing">Aktualizuji…</string>
+    <string name="widget_no_movement">Zatím žádný pohyb</string>
+
+    <!-- Aktualizace aplikace -->
+    <string name="settings_section_update">Aktualizace aplikace</string>
+    <string name="update_current_version">Nainstalovaná verze: %1$s</string>
+    <string name="update_check">Zkontrolovat aktualizace na GitHubu</string>
+    <string name="update_checking">Kontroluji dostupnost nové verze…</string>
+    <string name="update_up_to_date">Máte nejnovější verzi</string>
+    <string name="update_available">K dispozici je verze %1$s</string>
+    <string name="update_download">Stáhnout a nainstalovat</string>
+    <string name="update_downloading">Stahuji… %1$d %%</string>
+    <string name="update_ready">Staženo a ověřeno (SHA-256) – pokračujte instalací</string>
+    <string name="update_install">Nainstalovat</string>
+    <string name="update_recheck">Zkontrolovat znovu</string>
+    <string name="update_grant_install">Nejprve povolte instalaci z tohoto zdroje v otevřeném nastavení a poté klepněte znovu na Nainstalovat</string>
+    <string name="update_error">Aktualizace selhala: %1$s</string>
+    <string name="update_err_http">HTTP %1$d</string>
+    <string name="update_err_empty">Prázdná odpověď serveru</string>
+    <string name="update_err_unknown">Neznámá chyba</string>
+    <string name="update_err_download">Stažení selhalo</string>
+    <string name="update_err_install">Instalaci se nepodařilo spustit</string>
+    <string name="update_err_hash">SHA-256 otisk staženého APK nesouhlasí s manifestem</string>
+
+    <!-- Validace adres -->
+    <string name="val_err_empty">Adresa je prázdná</string>
+    <string name="val_err_unknown_format">Neznámý formát adresy (podporováno: 1…, 3…, bc1q…, bc1p…)</string>
+    <string name="val_err_legacy_length">Neplatná délka Legacy adresy</string>
+    <string name="val_err_base58_char">Adresa obsahuje neplatný Base58 znak</string>
+    <string name="val_err_decoded_length">Neplatná délka dekódovaných dat</string>
+    <string name="val_err_checksum">Chybný kontrolní součet – překlep v adrese?</string>
+    <string name="val_err_version">Nepodporovaná verze adresy (není mainnet)</string>
+    <string name="val_err_mixed_case">Bech32 adresa nesmí míchat velká a malá písmena</string>
+    <string name="val_err_too_long">Adresa je příliš dlouhá</string>
+    <string name="val_err_invalid_char">Adresa obsahuje neplatný znak</string>
+    <string name="val_err_bech32_format">Neplatný formát Bech32 adresy</string>
+    <string name="val_err_not_mainnet">Adresa není pro Bitcoin mainnet (očekáváno „bc“)</string>
+    <string name="val_err_bech32_char">Adresa obsahuje neplatný Bech32 znak</string>
+    <string name="val_err_too_short">Adresa je příliš krátká</string>
+    <string name="val_err_witness_version">Neplatná verze witness programu</string>
+    <string name="val_err_program_alignment">Neplatné zarovnání dat witness programu</string>
+    <string name="val_err_program_length">Neplatná délka witness programu</string>
+    <string name="val_err_v0_encoding">SegWit v0 musí používat kódování Bech32</string>
+    <string name="val_err_v0_program_length">Neplatná délka programu pro SegWit v0</string>
+    <string name="val_err_v1_encoding">SegWit v1+ musí používat kódování Bech32m</string>
+    <string name="val_err_future_version">Nepodporovaná budoucí verze witness programu</string>
+</resources>

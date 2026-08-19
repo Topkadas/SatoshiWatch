@@ -1,23 +1,28 @@
 package com.satoshiwatch.ui
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.satoshiwatch.R
 import com.satoshiwatch.data.settings.AppSettings
 import com.satoshiwatch.data.settings.SettingsRepository
 import com.satoshiwatch.data.update.UpdateManager
 import com.satoshiwatch.data.update.UpdateState
 import com.satoshiwatch.service.TransactionWatchService
+import com.satoshiwatch.widget.WidgetRenderer
 import com.satoshiwatch.worker.TransactionCheckWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 /**
  * Nastavení: vlastní uzel (REST/WS URL), SOCKS5 proxy (Orbot/Tor),
- * režimy monitorování a aktualizace aplikace. Validační metody vrací
- * text chyby, nebo null.
+ * režimy monitorování, jazyk a aktualizace aplikace. Validační metody
+ * vrací string resource chyby, nebo null.
  *
  * Stav aktualizace jen zrcadlí ze singleton [UpdateManager] – stahování
  * tak přežije opuštění obrazovky (ViewModel je vázaný na back-stack entry).
@@ -26,6 +31,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val updateManager: UpdateManager,
+    private val widgetRenderer: WidgetRenderer,
     @ApplicationContext private val appContext: Context
 ) : ViewModel() {
 
@@ -36,15 +42,16 @@ class SettingsViewModel @Inject constructor(
 
     // ------------------------------------------------------------------ Síť
 
-    fun saveNetworkSettings(apiUrl: String, wsUrl: String): String? {
+    @StringRes
+    fun saveNetworkSettings(apiUrl: String, wsUrl: String): Int? {
         val trimmedApi = apiUrl.trim()
         val parsed = trimmedApi.toHttpUrlOrNull()
         if (parsed == null || (parsed.scheme != "http" && parsed.scheme != "https")) {
-            return "Neplatná URL adresa REST API (musí být http:// nebo https://)"
+            return R.string.error_invalid_api_url
         }
         val trimmedWs = wsUrl.trim()
         if (!trimmedWs.startsWith("ws://") && !trimmedWs.startsWith("wss://")) {
-            return "WebSocket URL musí začínat ws:// nebo wss://"
+            return R.string.error_invalid_ws_url
         }
         settingsRepository.update { it.copy(apiBaseUrl = trimmedApi, wsUrl = trimmedWs) }
         restartRealtimeIfRunning()
@@ -56,11 +63,12 @@ class SettingsViewModel @Inject constructor(
         restartRealtimeIfRunning()
     }
 
-    fun saveProxy(host: String, portText: String): String? {
+    @StringRes
+    fun saveProxy(host: String, portText: String): Int? {
         val port = portText.trim().toIntOrNull()
-        if (port == null || port !in 1..65535) return "Neplatný port (1–65535)"
+        if (port == null || port !in 1..65535) return R.string.error_invalid_port
         val trimmedHost = host.trim()
-        if (trimmedHost.isEmpty()) return "Zadejte adresu proxy"
+        if (trimmedHost.isEmpty()) return R.string.error_proxy_host
         settingsRepository.update { it.copy(proxyHost = trimmedHost, proxyPort = port) }
         restartRealtimeIfRunning()
         return null
@@ -98,6 +106,15 @@ class SettingsViewModel @Inject constructor(
         if (settingsRepository.current.realtimeEnabled) {
             TransactionWatchService.stop(appContext)
             TransactionWatchService.start(appContext)
+        }
+    }
+
+    // ----------------------------------------------------------------- Jazyk
+
+    /** Po změně jazyka překreslí widget (jeho texty žijí mimo aktivitu). */
+    fun onLanguageChanged() {
+        viewModelScope.launch {
+            runCatching { widgetRenderer.updateAll() }
         }
     }
 

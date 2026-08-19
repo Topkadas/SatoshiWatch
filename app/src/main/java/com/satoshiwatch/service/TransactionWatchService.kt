@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.core.content.ContextCompat
 import com.satoshiwatch.R
+import com.satoshiwatch.core.locale.AppLocale
 import com.satoshiwatch.data.remote.MempoolWebSocketListener
 import com.satoshiwatch.data.remote.NetworkClientProvider
 import com.satoshiwatch.data.repository.WatchRepository
@@ -48,6 +49,11 @@ class TransactionWatchService : Service() {
     private var reconnectJob: Job? = null
     private var reconnectAttempts = 0
     @Volatile private var stopped = false
+
+    /** Texty trvalé notifikace respektují zvolený jazyk aplikace. */
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(AppLocale.wrap(newBase))
+    }
 
     override fun onCreate() {
         super.onCreate()

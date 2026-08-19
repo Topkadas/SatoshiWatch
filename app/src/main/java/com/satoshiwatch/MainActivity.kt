@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import com.satoshiwatch.core.locale.AppLocale
 import com.satoshiwatch.data.settings.SettingsRepository
 import com.satoshiwatch.service.TransactionWatchService
 import com.satoshiwatch.ui.navigation.AppRoot
@@ -24,6 +25,11 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject lateinit var settingsRepository: SettingsRepository
+
+    /** Aplikuje zvolený jazyk aplikace (system/cs/en/de) na celé UI. */
+    override fun attachBaseContext(newBase: android.content.Context) {
+        super.attachBaseContext(AppLocale.wrap(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

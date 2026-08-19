@@ -3,117 +3,156 @@
     <string name="app_name">SatoshiWatch</string>
 
     <!-- Dashboard -->
-    <string name="dashboard_watched_addresses">Sledované adresy</string>
-    <string name="dashboard_recent_transactions">Poslední transakce</string>
-    <string name="dashboard_empty_title">Zatím nesledujete žádnou adresu</string>
-    <string name="dashboard_empty_hint">Přidejte první bitcoinovou adresu tlačítkem +</string>
-    <string name="dashboard_no_transactions">Zatím žádné zaznamenané transakce</string>
-    <string name="action_add_address">Přidat adresu</string>
-    <string name="action_settings">Nastavení</string>
-    <string name="action_refresh">Aktualizovat</string>
-    <string name="action_delete">Smazat</string>
-    <string name="action_cancel">Zrušit</string>
-    <string name="action_save">Uložit</string>
-    <string name="action_back">Zpět</string>
-    <string name="action_scan_qr">Skenovat QR kód</string>
-    <string name="delete_dialog_title">Smazat adresu?</string>
-    <string name="delete_dialog_text">Adresa „%1$s“ přestane být sledována a její lokální historie bude odstraněna.</string>
-    <string name="tx_count">%1$d transakcí</string>
+    <string name="dashboard_watched_addresses">Watched addresses</string>
+    <string name="dashboard_recent_transactions">Recent transactions</string>
+    <string name="dashboard_empty_title">No addresses watched yet</string>
+    <string name="dashboard_empty_hint">Add your first Bitcoin address with the + button</string>
+    <string name="dashboard_no_transactions">No transactions recorded yet</string>
+    <string name="action_add_address">Add address</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_save">Save</string>
+    <string name="action_back">Back</string>
+    <string name="action_scan_qr">Scan QR code</string>
+    <string name="delete_dialog_title">Delete address?</string>
+    <string name="delete_dialog_text">“%1$s” will no longer be watched and its local history will be removed.</string>
+    <string name="tx_count">%1$d transactions</string>
     <string name="balance_btc">%1$s BTC</string>
 
-    <!-- Přidání adresy -->
-    <string name="add_address_title">Přidat sledovanou adresu</string>
-    <string name="field_address">Bitcoin adresa</string>
-    <string name="field_label">Štítek (např. Coldcard Vault 1)</string>
-    <string name="hint_valid_address">Platná adresa: %1$s</string>
-    <string name="error_camera_permission">Bez přístupu ke kameře nelze skenovat QR kód</string>
-    <string name="scanner_hint">Namiřte fotoaparát na QR kód s adresou</string>
-    <string name="msg_address_added">Adresa byla přidána a je sledována</string>
-    <string name="msg_address_exists">Tato adresa je již sledována</string>
+    <!-- Add address -->
+    <string name="add_address_title">Add watched address</string>
+    <string name="field_address">Bitcoin address</string>
+    <string name="field_label">Label (e.g. Coldcard Vault 1)</string>
+    <string name="hint_valid_address">Valid address: %1$s</string>
+    <string name="error_camera_permission">Camera permission is required to scan QR codes</string>
+    <string name="scanner_hint">Point the camera at a QR code with the address</string>
+    <string name="msg_address_added">Address added and being watched</string>
+    <string name="msg_address_exists">This address is already watched</string>
+    <string name="msg_address_removed">Address removed</string>
 
-    <!-- Stav transakce -->
-    <string name="status_in_mempool">Nepotvrzeno – v mempoolu</string>
-    <string name="status_confirmed_height">Potvrzeno v bloku %1$d</string>
-    <string name="status_confirmed">Potvrzeno</string>
+    <!-- Transaction status -->
+    <string name="status_in_mempool">Unconfirmed – in mempool</string>
+    <string name="status_confirmed_height">Confirmed in block %1$d</string>
+    <string name="status_confirmed">Confirmed</string>
 
-    <!-- Nastavení -->
-    <string name="settings_title">Nastavení</string>
-    <string name="settings_section_network">Síťové připojení</string>
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_network">Network connection</string>
     <string name="settings_api_url">REST API URL</string>
     <string name="settings_ws_url">WebSocket URL</string>
-    <string name="settings_save_network">Uložit síťová nastavení</string>
+    <string name="settings_save_network">Save network settings</string>
     <string name="settings_section_proxy">SOCKS5 proxy (Tor / Orbot)</string>
-    <string name="settings_proxy_enable">Směrovat provoz přes SOCKS5 proxy</string>
-    <string name="settings_proxy_host">Adresa proxy (host)</string>
+    <string name="settings_proxy_enable">Route traffic through SOCKS5 proxy</string>
+    <string name="settings_proxy_host">Proxy host</string>
     <string name="settings_proxy_port">Port</string>
-    <string name="settings_save_proxy">Uložit proxy</string>
-    <string name="settings_section_monitoring">Monitorování</string>
-    <string name="settings_realtime">Okamžité notifikace (WebSocket)</string>
-    <string name="settings_realtime_desc">Trvalé spojení na popředí – upozornění bez zpoždění Doze režimu</string>
-    <string name="settings_periodic">Periodická kontrola na pozadí</string>
-    <string name="settings_periodic_desc">Úsporné skenování přes WorkManager</string>
-    <string name="settings_interval">Interval kontroly</string>
+    <string name="settings_save_proxy">Save proxy</string>
+    <string name="settings_section_monitoring">Monitoring</string>
+    <string name="settings_realtime">Instant notifications (WebSocket)</string>
+    <string name="settings_realtime_desc">Persistent foreground connection – alerts without Doze delay</string>
+    <string name="settings_periodic">Periodic background checks</string>
+    <string name="settings_periodic_desc">Battery-friendly scanning via WorkManager</string>
+    <string name="settings_interval">Check interval</string>
     <string name="settings_interval_minutes">%1$d min</string>
-    <string name="settings_section_battery">Baterie</string>
-    <string name="settings_battery_button">Otevřít nastavení optimalizace baterie</string>
-    <string name="settings_battery_desc">Pro spolehlivé notifikace vypněte optimalizaci baterie pro SatoshiWatch</string>
-    <string name="settings_section_privacy">Soukromí</string>
-    <string name="settings_privacy_text">Žádné účty ani registrace. Žádná telemetrie a analytika. Data jsou uložena pouze v tomto zařízení v šifrované databázi (SQLCipher, klíč v Android KeyStore). Síťová komunikace směřuje přímo na vámi zvolený uzel, volitelně přes Tor.</string>
-    <string name="msg_settings_saved">Nastavení uloženo</string>
-    <string name="error_invalid_api_url">Neplatná URL adresa REST API (musí být http:// nebo https://)</string>
-    <string name="error_invalid_ws_url">WebSocket URL musí začínat ws:// nebo wss://</string>
-    <string name="error_invalid_port">Neplatný port (1–65535)</string>
+    <string name="settings_section_battery">Battery</string>
+    <string name="settings_battery_button">Open battery optimization settings</string>
+    <string name="settings_battery_desc">For reliable notifications, disable battery optimization for SatoshiWatch</string>
+    <string name="settings_section_privacy">Privacy</string>
+    <string name="settings_privacy_text">No accounts or registration. No telemetry or analytics. All data stays on this device in an encrypted database (SQLCipher, key in Android KeyStore). Network traffic goes directly to the node you choose, optionally over Tor.</string>
+    <string name="msg_settings_saved">Settings saved</string>
+    <string name="error_invalid_api_url">Invalid REST API URL (must be http:// or https://)</string>
+    <string name="error_invalid_ws_url">WebSocket URL must start with ws:// or wss://</string>
+    <string name="error_invalid_port">Invalid port (1–65535)</string>
+    <string name="error_proxy_host">Enter the proxy host</string>
 
-    <!-- Notifikační kanály -->
-    <string name="channel_outgoing_name">Odchozí transakce</string>
-    <string name="channel_outgoing_desc">Kritická výstraha při pohybu prostředků ze sledované adresy</string>
-    <string name="channel_incoming_name">Příchozí transakce</string>
-    <string name="channel_incoming_desc">Upozornění na příchozí platby na sledované adresy</string>
-    <string name="channel_service_name">Služba sledování na pozadí</string>
-    <string name="channel_service_desc">Trvalá notifikace aktivního sledování v reálném čase</string>
+    <!-- Language -->
+    <string name="settings_section_language">App language</string>
+    <string name="language_system">System default</string>
+    <string name="language_cs">Čeština</string>
+    <string name="language_en">English</string>
+    <string name="language_de">Deutsch</string>
 
-    <!-- Notifikace -->
-    <string name="notif_outgoing_title">⚠️ ODCHOZÍ transakce</string>
-    <string name="notif_outgoing_confirmed_title">⚠️ Odchozí transakce potvrzena</string>
-    <string name="notif_incoming_title">Příchozí transakce</string>
-    <string name="notif_incoming_confirmed_title">Příchozí transakce potvrzena</string>
+    <!-- Notification channels -->
+    <string name="channel_outgoing_name">Outgoing transactions</string>
+    <string name="channel_outgoing_desc">Critical alert when funds move out of a watched address</string>
+    <string name="channel_incoming_name">Incoming transactions</string>
+    <string name="channel_incoming_desc">Notifications about incoming payments</string>
+    <string name="channel_service_name">Background watch service</string>
+    <string name="channel_service_desc">Persistent notification of active real-time monitoring</string>
+
+    <!-- Notifications -->
+    <string name="notif_outgoing_title">⚠️ OUTGOING transaction</string>
+    <string name="notif_outgoing_confirmed_title">⚠️ Outgoing transaction confirmed</string>
+    <string name="notif_incoming_title">Incoming transaction</string>
+    <string name="notif_incoming_confirmed_title">Incoming transaction confirmed</string>
     <string name="notif_amount_line">%1$s: %2$s BTC (%3$s sat)</string>
-    <string name="notif_status_line">Stav: %1$s</string>
+    <string name="notif_status_line">Status: %1$s</string>
     <string name="notif_txid_line">TXID: %1$s</string>
-    <string name="notif_fee_line">Poplatek: %1$s sat</string>
-    <string name="notif_public_fallback">Nová aktivita na sledované adrese</string>
+    <string name="notif_fee_line">Fee: %1$s sat</string>
+    <string name="notif_public_fallback">New activity on a watched address</string>
 
-    <!-- Foreground služba -->
-    <string name="service_notif_title">SatoshiWatch – aktivní sledování</string>
-    <string name="service_state_connecting">Připojování k uzlu…</string>
-    <string name="service_state_connected">Připojeno – transakce se sledují v reálném čase</string>
-    <string name="service_state_reconnecting">Spojení přerušeno – nový pokus za %1$d s</string>
-    <string name="service_state_block">Nový blok %1$d – kontroluji potvrzení</string>
+    <!-- Foreground service -->
+    <string name="service_notif_title">SatoshiWatch – actively watching</string>
+    <string name="service_state_connecting">Connecting to node…</string>
+    <string name="service_state_connected">Connected – watching transactions in real time</string>
+    <string name="service_state_reconnecting">Connection lost – retrying in %1$d s</string>
+    <string name="service_state_block">New block %1$d – checking confirmations</string>
 
-    <!-- Synchronizace -->
-    <string name="msg_sync_done">Synchronizace dokončena</string>
-    <string name="msg_sync_failed">Synchronizace selhala u %1$d z %2$d adres</string>
+    <!-- Sync -->
+    <string name="msg_sync_done">Synchronization complete</string>
+    <string name="msg_sync_failed">Synchronization failed for %1$d of %2$d addresses</string>
+    <string name="msg_sync_error">Synchronization failed – check the node connection</string>
 
-    <!-- Domovský widget -->
-    <string name="widget_label">Přehled adres</string>
-    <string name="widget_description">Až 3 sledované adresy se zůstatkem a posledním pohybem</string>
-    <string name="widget_no_addresses">Žádné sledované adresy – přidejte je v aplikaci</string>
-    <string name="widget_updated_at">Aktualizováno %1$s</string>
-    <string name="widget_refreshing">Aktualizuji…</string>
-    <string name="widget_no_movement">Zatím žádný pohyb</string>
+    <!-- Home-screen widget -->
+    <string name="widget_label">Address overview</string>
+    <string name="widget_description">Up to 3 watched addresses with balance and last movement</string>
+    <string name="widget_no_addresses">No watched addresses – add them in the app</string>
+    <string name="widget_updated_at">Updated %1$s</string>
+    <string name="widget_refreshing">Refreshing…</string>
+    <string name="widget_no_movement">No movement yet</string>
 
-    <!-- Aktualizace aplikace -->
-    <string name="settings_section_update">Aktualizace aplikace</string>
-    <string name="update_current_version">Nainstalovaná verze: %1$s</string>
-    <string name="update_check">Zkontrolovat aktualizace na GitHubu</string>
-    <string name="update_checking">Kontroluji dostupnost nové verze…</string>
-    <string name="update_up_to_date">Máte nejnovější verzi</string>
-    <string name="update_available">K dispozici je verze %1$s</string>
-    <string name="update_download">Stáhnout a nainstalovat</string>
-    <string name="update_downloading">Stahuji… %1$d %%</string>
-    <string name="update_ready">Staženo a ověřeno (SHA-256) – pokračujte instalací</string>
-    <string name="update_install">Nainstalovat</string>
-    <string name="update_recheck">Zkontrolovat znovu</string>
-    <string name="update_grant_install">Nejprve povolte instalaci z tohoto zdroje v otevřeném nastavení a poté klepněte znovu na Nainstalovat</string>
-    <string name="update_error">Aktualizace selhala: %1$s</string>
+    <!-- App updates -->
+    <string name="settings_section_update">App updates</string>
+    <string name="update_current_version">Installed version: %1$s</string>
+    <string name="update_check">Check for updates on GitHub</string>
+    <string name="update_checking">Checking for a new version…</string>
+    <string name="update_up_to_date">You have the latest version</string>
+    <string name="update_available">Version %1$s is available</string>
+    <string name="update_download">Download and install</string>
+    <string name="update_downloading">Downloading… %1$d %%</string>
+    <string name="update_ready">Downloaded and verified (SHA-256) – continue with installation</string>
+    <string name="update_install">Install</string>
+    <string name="update_recheck">Check again</string>
+    <string name="update_grant_install">First allow installs from this source in the settings screen that opened, then tap Install again</string>
+    <string name="update_error">Update failed: %1$s</string>
+    <string name="update_err_http">HTTP %1$d</string>
+    <string name="update_err_empty">Empty server response</string>
+    <string name="update_err_unknown">Unknown error</string>
+    <string name="update_err_download">Download failed</string>
+    <string name="update_err_install">Could not launch the installer</string>
+    <string name="update_err_hash">SHA-256 digest of the downloaded APK does not match the manifest</string>
+
+    <!-- Address validation -->
+    <string name="val_err_empty">Address is empty</string>
+    <string name="val_err_unknown_format">Unknown address format (supported: 1…, 3…, bc1q…, bc1p…)</string>
+    <string name="val_err_legacy_length">Invalid legacy address length</string>
+    <string name="val_err_base58_char">Address contains an invalid Base58 character</string>
+    <string name="val_err_decoded_length">Invalid decoded data length</string>
+    <string name="val_err_checksum">Checksum mismatch – typo in the address?</string>
+    <string name="val_err_version">Unsupported address version (not mainnet)</string>
+    <string name="val_err_mixed_case">Bech32 address must not mix upper and lower case</string>
+    <string name="val_err_too_long">Address is too long</string>
+    <string name="val_err_invalid_char">Address contains an invalid character</string>
+    <string name="val_err_bech32_format">Invalid Bech32 address format</string>
+    <string name="val_err_not_mainnet">Address is not for Bitcoin mainnet (expected “bc”)</string>
+    <string name="val_err_bech32_char">Address contains an invalid Bech32 character</string>
+    <string name="val_err_too_short">Address is too short</string>
+    <string name="val_err_witness_version">Invalid witness program version</string>
+    <string name="val_err_program_alignment">Invalid witness program data alignment</string>
+    <string name="val_err_program_length">Invalid witness program length</string>
+    <string name="val_err_v0_encoding">SegWit v0 must use Bech32 encoding</string>
+    <string name="val_err_v0_program_length">Invalid program length for SegWit v0</string>
+    <string name="val_err_v1_encoding">SegWit v1+ must use Bech32m encoding</string>
+    <string name="val_err_future_version">Unsupported future witness program version</string>
 </resources>

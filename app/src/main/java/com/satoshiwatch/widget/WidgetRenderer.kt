@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.RemoteViews
 import com.satoshiwatch.MainActivity
 import com.satoshiwatch.R
+import com.satoshiwatch.core.locale.AppLocale
 import com.satoshiwatch.core.util.Formatting
 import com.satoshiwatch.data.local.dao.TransactionDao
 import com.satoshiwatch.data.local.dao.WatchedAddressDao
@@ -28,10 +29,13 @@ import javax.inject.Singleton
  */
 @Singleton
 class WidgetRenderer @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext private val appContext: Context,
     private val addressDao: WatchedAddressDao,
     private val transactionDao: TransactionDao
 ) {
+
+    /** Kontext obalený zvoleným jazykem – texty widgetu respektují volbu v Nastavení. */
+    private val context: Context get() = AppLocale.wrap(appContext)
 
     private companion object {
         const val MAX_ROWS = 3

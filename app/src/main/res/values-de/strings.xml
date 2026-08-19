@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SatoshiWatch</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_watched_addresses">Überwachte Adressen</string>
+    <string name="dashboard_recent_transactions">Letzte Transaktionen</string>
+    <string name="dashboard_empty_title">Noch keine Adressen überwacht</string>
+    <string name="dashboard_empty_hint">Fügen Sie Ihre erste Bitcoin-Adresse mit der Taste + hinzu</string>
+    <string name="dashboard_no_transactions">Noch keine Transaktionen aufgezeichnet</string>
+    <string name="action_add_address">Adresse hinzufügen</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_refresh">Aktualisieren</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_save">Speichern</string>
+    <string name="action_back">Zurück</string>
+    <string name="action_scan_qr">QR-Code scannen</string>
+    <string name="delete_dialog_title">Adresse löschen?</string>
+    <string name="delete_dialog_text">„%1$s“ wird nicht mehr überwacht und der lokale Verlauf wird entfernt.</string>
+    <string name="tx_count">%1$d Transaktionen</string>
+    <string name="balance_btc">%1$s BTC</string>
+
+    <!-- Adresse hinzufügen -->
+    <string name="add_address_title">Überwachte Adresse hinzufügen</string>
+    <string name="field_address">Bitcoin-Adresse</string>
+    <string name="field_label">Bezeichnung (z. B. Coldcard Vault 1)</string>
+    <string name="hint_valid_address">Gültige Adresse: %1$s</string>
+    <string name="error_camera_permission">Ohne Kamerazugriff kann kein QR-Code gescannt werden</string>
+    <string name="scanner_hint">Richten Sie die Kamera auf den QR-Code mit der Adresse</string>
+    <string name="msg_address_added">Adresse hinzugefügt und wird überwacht</string>
+    <string name="msg_address_exists">Diese Adresse wird bereits überwacht</string>
+    <string name="msg_address_removed">Adresse entfernt</string>
+
+    <!-- Transaktionsstatus -->
+    <string name="status_in_mempool">Unbestätigt – im Mempool</string>
+    <string name="status_confirmed_height">Bestätigt in Block %1$d</string>
+    <string name="status_confirmed">Bestätigt</string>
+
+    <!-- Einstellungen -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_section_network">Netzwerkverbindung</string>
+    <string name="settings_api_url">REST-API-URL</string>
+    <string name="settings_ws_url">WebSocket-URL</string>
+    <string name="settings_save_network">Netzwerkeinstellungen speichern</string>
+    <string name="settings_section_proxy">SOCKS5-Proxy (Tor / Orbot)</string>
+    <string name="settings_proxy_enable">Datenverkehr über SOCKS5-Proxy leiten</string>
+    <string name="settings_proxy_host">Proxy-Host</string>
+    <string name="settings_proxy_port">Port</string>
+    <string name="settings_save_proxy">Proxy speichern</string>
+    <string name="settings_section_monitoring">Überwachung</string>
+    <string name="settings_realtime">Sofortige Benachrichtigungen (WebSocket)</string>
+    <string name="settings_realtime_desc">Dauerhafte Vordergrundverbindung – Warnungen ohne Doze-Verzögerung</string>
+    <string name="settings_periodic">Regelmäßige Hintergrundprüfung</string>
+    <string name="settings_periodic_desc">Akkuschonende Prüfung über WorkManager</string>
+    <string name="settings_interval">Prüfintervall</string>
+    <string name="settings_interval_minutes">%1$d Min.</string>
+    <string name="settings_section_battery">Akku</string>
+    <string name="settings_battery_button">Akku-Optimierungseinstellungen öffnen</string>
+    <string name="settings_battery_desc">Deaktivieren Sie die Akku-Optimierung für SatoshiWatch, um zuverlässige Benachrichtigungen zu erhalten</string>
+    <string name="settings_section_privacy">Privatsphäre</string>
+    <string name="settings_privacy_text">Keine Konten, keine Registrierung. Keine Telemetrie oder Analyse. Alle Daten bleiben auf diesem Gerät in einer verschlüsselten Datenbank (SQLCipher, Schlüssel im Android KeyStore). Der Netzwerkverkehr geht direkt an den von Ihnen gewählten Node, optional über Tor.</string>
+    <string name="msg_settings_saved">Einstellungen gespeichert</string>
+    <string name="error_invalid_api_url">Ungültige REST-API-URL (muss http:// oder https:// sein)</string>
+    <string name="error_invalid_ws_url">WebSocket-URL muss mit ws:// oder wss:// beginnen</string>
+    <string name="error_invalid_port">Ungültiger Port (1–65535)</string>
+    <string name="error_proxy_host">Geben Sie den Proxy-Host ein</string>
+
+    <!-- Sprache -->
+    <string name="settings_section_language">App-Sprache</string>
+    <string name="language_system">Systemstandard</string>
+    <string name="language_cs">Čeština</string>
+    <string name="language_en">English</string>
+    <string name="language_de">Deutsch</string>
+
+    <!-- Benachrichtigungskanäle -->
+    <string name="channel_outgoing_name">Ausgehende Transaktionen</string>
+    <string name="channel_outgoing_desc">Kritische Warnung, wenn Guthaben eine überwachte Adresse verlässt</string>
+    <string name="channel_incoming_name">Eingehende Transaktionen</string>
+    <string name="channel_incoming_desc">Benachrichtigungen über eingehende Zahlungen</string>
+    <string name="channel_service_name">Hintergrund-Überwachungsdienst</string>
+    <string name="channel_service_desc">Dauerhafte Benachrichtigung der aktiven Echtzeitüberwachung</string>
+
+    <!-- Benachrichtigungen -->
+    <string name="notif_outgoing_title">⚠️ AUSGEHENDE Transaktion</string>
+    <string name="notif_outgoing_confirmed_title">⚠️ Ausgehende Transaktion bestätigt</string>
+    <string name="notif_incoming_title">Eingehende Transaktion</string>
+    <string name="notif_incoming_confirmed_title">Eingehende Transaktion bestätigt</string>
+    <string name="notif_amount_line">%1$s: %2$s BTC (%3$s sat)</string>
+    <string name="notif_status_line">Status: %1$s</string>
+    <string name="notif_txid_line">TXID: %1$s</string>
+    <string name="notif_fee_line">Gebühr: %1$s sat</string>
+    <string name="notif_public_fallback">Neue Aktivität auf einer überwachten Adresse</string>
+
+    <!-- Vordergrunddienst -->
+    <string name="service_notif_title">SatoshiWatch – aktive Überwachung</string>
+    <string name="service_state_connecting">Verbindung zum Node wird hergestellt…</string>
+    <string name="service_state_connected">Verbunden – Transaktionen werden in Echtzeit überwacht</string>
+    <string name="service_state_reconnecting">Verbindung unterbrochen – neuer Versuch in %1$d s</string>
+    <string name="service_state_block">Neuer Block %1$d – Bestätigungen werden geprüft</string>
+
+    <!-- Synchronisierung -->
+    <string name="msg_sync_done">Synchronisierung abgeschlossen</string>
+    <string name="msg_sync_failed">Synchronisierung bei %1$d von %2$d Adressen fehlgeschlagen</string>
+    <string name="msg_sync_error">Synchronisierung fehlgeschlagen – Node-Verbindung prüfen</string>
+
+    <!-- Startbildschirm-Widget -->
+    <string name="widget_label">Adressübersicht</string>
+    <string name="widget_description">Bis zu 3 überwachte Adressen mit Guthaben und letzter Bewegung</string>
+    <string name="widget_no_addresses">Keine überwachten Adressen – fügen Sie sie in der App hinzu</string>
+    <string name="widget_updated_at">Aktualisiert %1$s</string>
+    <string name="widget_refreshing">Wird aktualisiert…</string>
+    <string name="widget_no_movement">Noch keine Bewegung</string>
+
+    <!-- App-Updates -->
+    <string name="settings_section_update">App-Updates</string>
+    <string name="update_current_version">Installierte Version: %1$s</string>
+    <string name="update_check">Auf GitHub nach Updates suchen</string>
+    <string name="update_checking">Suche nach einer neuen Version…</string>
+    <string name="update_up_to_date">Sie haben die neueste Version</string>
+    <string name="update_available">Version %1$s ist verfügbar</string>
+    <string name="update_download">Herunterladen und installieren</string>
+    <string name="update_downloading">Wird heruntergeladen… %1$d %%</string>
+    <string name="update_ready">Heruntergeladen und verifiziert (SHA-256) – mit der Installation fortfahren</string>
+    <string name="update_install">Installieren</string>
+    <string name="update_recheck">Erneut prüfen</string>
+    <string name="update_grant_install">Erlauben Sie zunächst die Installation aus dieser Quelle in den geöffneten Einstellungen und tippen Sie dann erneut auf Installieren</string>
+    <string name="update_error">Update fehlgeschlagen: %1$s</string>
+    <string name="update_err_http">HTTP %1$d</string>
+    <string name="update_err_empty">Leere Serverantwort</string>
+    <string name="update_err_unknown">Unbekannter Fehler</string>
+    <string name="update_err_download">Download fehlgeschlagen</string>
+    <string name="update_err_install">Installationsprogramm konnte nicht gestartet werden</string>
+    <string name="update_err_hash">SHA-256-Prüfsumme des heruntergeladenen APK stimmt nicht mit dem Manifest überein</string>
+
+    <!-- Adressvalidierung -->
+    <string name="val_err_empty">Adresse ist leer</string>
+    <string name="val_err_unknown_format">Unbekanntes Adressformat (unterstützt: 1…, 3…, bc1q…, bc1p…)</string>
+    <string name="val_err_legacy_length">Ungültige Länge der Legacy-Adresse</string>
+    <string name="val_err_base58_char">Adresse enthält ein ungültiges Base58-Zeichen</string>
+    <string name="val_err_decoded_length">Ungültige Länge der dekodierten Daten</string>
+    <string name="val_err_checksum">Prüfsummenfehler – Tippfehler in der Adresse?</string>
+    <string name="val_err_version">Nicht unterstützte Adressversion (kein Mainnet)</string>
+    <string name="val_err_mixed_case">Bech32-Adresse darf Groß- und Kleinbuchstaben nicht mischen</string>
+    <string name="val_err_too_long">Adresse ist zu lang</string>
+    <string name="val_err_invalid_char">Adresse enthält ein ungültiges Zeichen</string>
+    <string name="val_err_bech32_format">Ungültiges Bech32-Adressformat</string>
+    <string name="val_err_not_mainnet">Adresse ist nicht für das Bitcoin-Mainnet (erwartet „bc“)</string>
+    <string name="val_err_bech32_char">Adresse enthält ein ungültiges Bech32-Zeichen</string>
+    <string name="val_err_too_short">Adresse ist zu kurz</string>
+    <string name="val_err_witness_version">Ungültige Witness-Programmversion</string>
+    <string name="val_err_program_alignment">Ungültige Ausrichtung der Witness-Programmdaten</string>
+    <string name="val_err_program_length">Ungültige Länge des Witness-Programms</string>
+    <string name="val_err_v0_encoding">SegWit v0 muss die Bech32-Kodierung verwenden</string>
+    <string name="val_err_v0_program_length">Ungültige Programmlänge für SegWit v0</string>
+    <string name="val_err_v1_encoding">SegWit v1+ muss die Bech32m-Kodierung verwenden</string>
+    <string name="val_err_future_version">Nicht unterstützte zukünftige Witness-Programmversion</string>
+</resources>

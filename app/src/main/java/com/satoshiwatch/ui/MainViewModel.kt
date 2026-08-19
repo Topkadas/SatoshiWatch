@@ -1,7 +1,9 @@
 package com.satoshiwatch.ui
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.satoshiwatch.R
 import com.satoshiwatch.core.validation.BitcoinAddressValidator
 import com.satoshiwatch.core.validation.ValidationResult
 import com.satoshiwatch.data.local.entity.TransactionEntity
@@ -19,6 +21,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+/** Lokalizovatelná zpráva pro snackbar (resource + argumenty). */
+data class UiMessage(@StringRes val res: Int, val args: List<Any> = emptyList())
+
 /** Stav a akce hlavní obrazovky (dashboard) a přidávání adres. */
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -35,23 +40,23 @@ class MainViewModel @Inject constructor(
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
     /** Jednorázové zprávy pro snackbar. */
-    private val _messages = MutableSharedFlow<String>(extraBufferCapacity = 8)
-    val messages: SharedFlow<String> = _messages.asSharedFlow()
+    private val _messages = MutableSharedFlow<UiMessage>(extraBufferCapacity = 8)
+    val messages: SharedFlow<UiMessage> = _messages.asSharedFlow()
 
     /**
      * Validuje vstup (včetně BIP-21 „bitcoin:“ URI z QR kódu) a přidá adresu.
-     * [onResult] dostane null při úspěchu, jinak text chyby pro formulář.
+     * [onResult] dostane null při úspěchu, jinak string resource chyby.
      */
-    fun addAddress(rawInput: String, label: String, onResult: (String?) -> Unit) {
+    fun addAddress(rawInput: String, label: String, onResult: (Int?) -> Unit) {
         viewModelScope.launch {
             when (val result = BitcoinAddressValidator.validate(rawInput)) {
-                is ValidationResult.Invalid -> onResult(result.reason)
+                is ValidationResult.Invalid -> onResult(result.reasonRes)
                 is ValidationResult.Valid -> {
                     if (repository.isWatched(result.normalized)) {
-                        onResult("Tato adresa je již sledována")
+                        onResult(R.string.msg_address_exists)
                     } else {
                         repository.addAddress(result.normalized, label.trim(), result.type)
-                        _messages.tryEmit("Adresa byla přidána a je sledována")
+                        _messages.tryEmit(UiMessage(R.string.msg_address_added))
                         onResult(null)
                     }
                 }
@@ -62,7 +67,7 @@ class MainViewModel @Inject constructor(
     fun removeAddress(address: String) {
         viewModelScope.launch {
             repository.removeAddress(address)
-            _messages.tryEmit("Adresa byla odstraněna")
+            _messages.tryEmit(UiMessage(R.string.msg_address_removed))
         }
     }
 
@@ -74,14 +79,17 @@ class MainViewModel @Inject constructor(
             try {
                 val result = repository.syncAll(notify = true)
                 if (result.isFullSuccess) {
-                    _messages.tryEmit("Synchronizace dokončena")
+                    _messages.tryEmit(UiMessage(R.string.msg_sync_done))
                 } else {
                     _messages.tryEmit(
-                        "Synchronizace selhala u ${result.failedAddresses} z ${result.totalAddresses} adres"
+                        UiMessage(
+                            R.string.msg_sync_failed,
+                            listOf(result.failedAddresses, result.totalAddresses)
+                        )
                     )
                 }
             } catch (_: Exception) {
-                _messages.tryEmit("Synchronizace selhala – zkontrolujte připojení k uzlu")
+                _messages.tryEmit(UiMessage(R.string.msg_sync_error))
             } finally {
                 _isRefreshing.value = false
             }
